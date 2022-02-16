@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/DataFormatSwitcher/DataFormatSwitcher/obj
+/DataFormatSwitcher/.vs/DataFormatSwitcher/v17
+/DataFormatSwitcher/DataFormatSwitcher/bin/Debug/netcoreapp3.1
