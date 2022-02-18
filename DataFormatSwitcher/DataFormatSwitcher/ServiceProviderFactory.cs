@@ -30,6 +30,6 @@ namespace DataFormatSwitcher
         }
 
         public static  T GetService<T>() where T : class
-        => (T)serviceProvider.GetService(typeof(T));
+            => (T)serviceProvider.GetService(typeof(T));
     }
 }
