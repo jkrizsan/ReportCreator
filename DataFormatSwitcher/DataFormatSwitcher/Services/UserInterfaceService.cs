@@ -1,9 +1,9 @@
 ﻿using DataFormatSwitcher.Data;
 using DataFormatSwitcher.Exceptions;
 using DataFormatSwitcher.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace DataFormatSwitcher.Services
@@ -18,10 +18,11 @@ namespace DataFormatSwitcher.Services
         /// Constructor
         /// </summary>
         /// <param name="loggerFactory"></param>
-        public UserInterfaceService(ILoggerFactory loggerFactory, IConfiguration configuration)
+        /// <param name="appSettings"></param>
+        public UserInterfaceService(ILoggerFactory loggerFactory, AppSettings appSettings)
         {
-            _appSettings = configuration.GetSection("Settings").Get<AppSettings>();
             _logger = loggerFactory.CreateLogger<UserInterfaceService>();
+            _appSettings = appSettings;
         }
 
         /// <inheritdoc />
@@ -64,8 +65,13 @@ namespace DataFormatSwitcher.Services
 
             if (filePath.Length < 4 || filePath.EndsWith(".csv") == false)
             {
-                throw new UserException("The fourth argument have to be set! Supported file format is CSV");
+                throw new UserException("The fourth argument have to be set! Supported file format is CSV!");
             }
+
+            if (File.Exists(filePath) == false)
+            {
+                throw new UserException($"The set '{filePath}' file does not exist!");
+            } 
 
             request.FilePath = filePath;
         }

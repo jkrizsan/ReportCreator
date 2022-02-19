@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using DataFormatSwitcher.Interfaces;
 using DataFormatSwitcher.Data;
 using DataFormatSwitcher.Exceptions;
+using System.Linq;
 
 namespace DataFormatSwitcher
 {
@@ -19,9 +20,19 @@ namespace DataFormatSwitcher
             try
             {
                 init();
+                
                 _userInterfaceService.HelpUser(args);
+                
                 ConvertRequest request = _userInterfaceService.BuildRequest(args);
-                _converterService.Convert();
+                
+                var rawData = _converterService.ReadDataFromFile(request);
+                var data = _converterService.ParseData(rawData.ToList(), request);
+                
+                _converterService.ConvertTo();
+            }
+            catch (FileValidationException ex)
+            {
+                _logger.LogError($"Error message: {ex.ErrorMessage}");
             }
             catch (UserException ex)
             {

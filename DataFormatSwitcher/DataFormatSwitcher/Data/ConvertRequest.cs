@@ -1,7 +1,7 @@
 ﻿namespace DataFormatSwitcher.Data
 {
     /// <summary>
-    /// Dto class for the input data
+    /// Dto class for the input/request data
     /// </summary>
     public class ConvertRequest
     {

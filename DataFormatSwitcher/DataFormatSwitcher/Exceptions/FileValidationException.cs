@@ -7,10 +7,9 @@ namespace DataFormatSwitcher.Exceptions
     /// </summary>
     public class FileValidationException : Exception
     {
-        public FileValidationException(string message, int lineNumber)
+        public FileValidationException(string message)
         {
             ErrorMessage = message;
-            LineNumber = lineNumber;
         }
 
         /// <summary>
@@ -18,9 +17,5 @@ namespace DataFormatSwitcher.Exceptions
         /// </summary>
         public string ErrorMessage;
 
-        /// <summary>
-        /// Line Number
-        /// </summary>
-        public int LineNumber { get; set; }
     }
 }

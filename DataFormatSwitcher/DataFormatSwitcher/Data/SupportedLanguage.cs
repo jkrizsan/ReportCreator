@@ -11,6 +11,11 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Display Name of the SupportedLanguage, like en-GB or fi-FI
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
         /// Date format
         /// </summary>
         public string DateFormat { get; set; }

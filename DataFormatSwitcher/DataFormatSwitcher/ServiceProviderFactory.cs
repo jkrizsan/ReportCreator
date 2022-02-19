@@ -1,4 +1,5 @@
 ﻿using System;
+using DataFormatSwitcher.Data;
 using DataFormatSwitcher.Interfaces;
 using DataFormatSwitcher.Services;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +29,7 @@ namespace DataFormatSwitcher
                .AddJsonFile("appsettings.json", true, true)
                .Build();
 
-            services.AddSingleton(config);
+            services.AddSingleton(config.GetSection("Settings").Get<AppSettings>());
 
             services.AddLogging(builder =>
                 builder.AddSimpleConsole());
