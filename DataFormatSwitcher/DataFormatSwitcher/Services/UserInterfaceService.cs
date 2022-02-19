@@ -1,12 +1,12 @@
-﻿using DataFormatSwitcher.Data;
-using DataFormatSwitcher.Exceptions;
-using DataFormatSwitcher.Interfaces;
+﻿using ReportCreator.Data;
+using ReportCreator.Exceptions;
+using ReportCreator.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace DataFormatSwitcher.Services
+namespace ReportCreator.Services
 {
     public class UserInterfaceService : IUserInterfaceService
     {

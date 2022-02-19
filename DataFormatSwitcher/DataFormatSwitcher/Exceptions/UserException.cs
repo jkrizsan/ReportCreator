@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataFormatSwitcher.Exceptions
+namespace ReportCreator.Exceptions
 {
     /// <summary>
     /// Indicates exception for user errors

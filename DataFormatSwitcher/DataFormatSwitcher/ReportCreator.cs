@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using DataFormatSwitcher.Interfaces;
-using DataFormatSwitcher.Data;
-using DataFormatSwitcher.Exceptions;
+using ReportCreator.Interfaces;
+using ReportCreator.Data;
+using ReportCreator.Exceptions;
 using System.Linq;
 
-namespace DataFormatSwitcher
+namespace ReportCreator
 {
-    internal class DataFormatSwitcher
+    internal class ReportCreator
     {
         private static ILogger _logger;
 
@@ -52,7 +52,7 @@ namespace DataFormatSwitcher
         private static void init()
         {
             _logger = ServiceProviderFactory.GetService<ILoggerFactory>()
-                .CreateLogger<DataFormatSwitcher>();
+                .CreateLogger<ReportCreator>();
 
             _converterService = ServiceProviderFactory.GetService<IConverterService>();
 

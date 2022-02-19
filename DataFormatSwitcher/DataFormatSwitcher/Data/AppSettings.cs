@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataFormatSwitcher.Data
+namespace ReportCreator.Data
 {
     /// <summary>
     /// Dto for Application Settings

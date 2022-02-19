@@ -1,9 +1,9 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using DataFormatSwitcher.Data;
-using DataFormatSwitcher.Exceptions;
-using DataFormatSwitcher.Interfaces;
-using DataFormatSwitcher.Mappers;
+using ReportCreator.Data;
+using ReportCreator.Exceptions;
+using ReportCreator.Interfaces;
+using ReportCreator.Mappers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace DataFormatSwitcher.Services
+namespace ReportCreator.Services
 {
     /// <summary>
     /// ConverterService Class

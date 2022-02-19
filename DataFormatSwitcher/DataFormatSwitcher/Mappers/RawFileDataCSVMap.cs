@@ -1,7 +1,7 @@
 ﻿using CsvHelper.Configuration;
-using DataFormatSwitcher.Data;
+using ReportCreator.Data;
 
-namespace DataFormatSwitcher.Mappers
+namespace ReportCreator.Mappers
 {
     public sealed class RawFileDataCSVMap : ClassMap<RawFileData>
     {

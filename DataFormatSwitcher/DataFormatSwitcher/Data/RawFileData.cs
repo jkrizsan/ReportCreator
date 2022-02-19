@@ -1,4 +1,4 @@
-﻿namespace DataFormatSwitcher.Data
+﻿namespace ReportCreator.Data
 {
     /// <summary>
     /// Dto for raw file data, before any conversion

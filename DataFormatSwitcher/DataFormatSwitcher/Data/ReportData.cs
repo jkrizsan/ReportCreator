@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataFormatSwitcher.Data
+namespace ReportCreator.Data
 {
     /// <summary>
     /// Report/output file data

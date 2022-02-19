@@ -1,7 +1,7 @@
-﻿using DataFormatSwitcher.Data;
+﻿using ReportCreator.Data;
 using System.Collections.Generic;
 
-namespace DataFormatSwitcher.Interfaces
+namespace ReportCreator.Interfaces
 {
     /// <summary>
     /// Converter Interface

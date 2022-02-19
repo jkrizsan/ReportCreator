@@ -1,4 +1,4 @@
-﻿namespace DataFormatSwitcher.Data
+﻿namespace ReportCreator.Data
 {
     /// <summary>
     /// Supported Language types

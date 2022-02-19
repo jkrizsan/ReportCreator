@@ -1,11 +1,11 @@
 ﻿using System;
-using DataFormatSwitcher.Data;
-using DataFormatSwitcher.Interfaces;
-using DataFormatSwitcher.Services;
+using ReportCreator.Data;
+using ReportCreator.Interfaces;
+using ReportCreator.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-namespace DataFormatSwitcher
+namespace ReportCreator
 {
     /// <summary>
     /// Provides Microsoft.Extensions.DependencyInjection.ServiceCollection

@@ -1,6 +1,6 @@
-﻿using DataFormatSwitcher.Data;
+﻿using ReportCreator.Data;
 
-namespace DataFormatSwitcher.Interfaces
+namespace ReportCreator.Interfaces
 {
     /// <summary>
     /// Interface for UserInterface Service
