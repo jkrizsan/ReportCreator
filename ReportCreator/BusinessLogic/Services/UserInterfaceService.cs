@@ -1,16 +1,18 @@
-﻿using ReportCreator.Data;
-using ReportCreator.Exceptions;
-using ReportCreator.Interfaces;
+﻿using ReportCreator.BusinessLogic.Data;
+using ReportCreator.BusinessLogic.Exceptions;
+using ReportCreator.BusinessLogic.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace ReportCreator.Services
+namespace ReportCreator.BusinessLogic.Services
 {
     public class UserInterfaceService : IUserInterfaceService
     {
         private readonly ILogger _logger;
+
+        private readonly IFileWrapper _fileWrapper;
 
         private readonly AppSettings _appSettings;
 
@@ -19,9 +21,10 @@ namespace ReportCreator.Services
         /// </summary>
         /// <param name="loggerFactory"></param>
         /// <param name="appSettings"></param>
-        public UserInterfaceService(ILoggerFactory loggerFactory, AppSettings appSettings)
+        public UserInterfaceService(ILoggerFactory loggerFactory, IFileWrapper fileWrapper, AppSettings appSettings)
         {
             _logger = loggerFactory.CreateLogger<UserInterfaceService>();
+            _fileWrapper = fileWrapper;
             _appSettings = appSettings;
         }
 
@@ -68,7 +71,7 @@ namespace ReportCreator.Services
                 throw new UserException("The fourth argument have to be set! Supported file format is CSV!");
             }
 
-            if (File.Exists(filePath) == false)
+            if (_fileWrapper.Exists(filePath) == false)
             {
                 throw new UserException($"The set '{filePath}' file does not exist!");
             } 

@@ -1,5 +1,5 @@
 ﻿using CsvHelper.Configuration;
-using ReportCreator.Data;
+using ReportCreator.BusinessLogic.Data;
 
 namespace ReportCreator.Mappers
 {

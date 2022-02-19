@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReportCreator.Exceptions
+namespace ReportCreator.BusinessLogic.Exceptions
 {
     /// <summary>
     /// Indicates exception for user errors

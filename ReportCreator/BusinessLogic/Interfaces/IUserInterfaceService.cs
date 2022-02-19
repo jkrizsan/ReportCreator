@@ -1,6 +1,6 @@
-﻿using ReportCreator.Data;
+﻿using ReportCreator.BusinessLogic.Data;
 
-namespace ReportCreator.Interfaces
+namespace ReportCreator.BusinessLogic.Interfaces
 {
     /// <summary>
     /// Interface for UserInterface Service

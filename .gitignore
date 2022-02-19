@@ -11,3 +11,7 @@
 /ReportCreator/ReportCreator/bin/Debug/netcoreapp3.1
 /ReportCreator/ReportCreator/obj
 /ReportCreator/.vs/ReportCreator
+/ReportCreator/BusinessLogic/bin/Debug/netcoreapp3.1
+/ReportCreator/BusinessLogic/obj
+/ReportCreator/Test/bin/Debug/netcoreapp3.1
+/ReportCreator/Test/obj

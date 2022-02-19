@@ -1,8 +1,8 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using ReportCreator.Data;
-using ReportCreator.Exceptions;
-using ReportCreator.Interfaces;
+using ReportCreator.BusinessLogic.Data;
+using ReportCreator.BusinessLogic.Exceptions;
+using ReportCreator.BusinessLogic.Interfaces;
 using ReportCreator.Mappers;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,7 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace ReportCreator.Services
+namespace ReportCreator.BusinessLogic.Services
 {
     /// <summary>
     /// ConverterService Class

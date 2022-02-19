@@ -1,4 +1,4 @@
-﻿namespace ReportCreator.Data
+﻿namespace ReportCreator.BusinessLogic.Data
 {
     /// <summary>
     /// Dto class for the input/request data

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReportCreator.Data
+namespace ReportCreator.BusinessLogic.Data
 {
     /// <summary>
     /// Dto for parsed data

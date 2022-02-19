@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ReportCreator.Data
+namespace ReportCreator.BusinessLogic.Data
 {
     /// <summary>
     /// Dto for Application Settings

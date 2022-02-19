@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using ReportCreator.Interfaces;
-using ReportCreator.Data;
-using ReportCreator.Exceptions;
+using ReportCreator.BusinessLogic.Interfaces;
+using ReportCreator.BusinessLogic.Data;
+using ReportCreator.BusinessLogic.Exceptions;
 using System.Linq;
 
 namespace ReportCreator

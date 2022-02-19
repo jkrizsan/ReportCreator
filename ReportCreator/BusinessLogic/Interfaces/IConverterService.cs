@@ -1,12 +1,12 @@
-﻿using ReportCreator.Data;
+﻿using ReportCreator.BusinessLogic.Data;
 using System.Collections.Generic;
 
-namespace ReportCreator.Interfaces
+namespace ReportCreator.BusinessLogic.Interfaces
 {
     /// <summary>
     /// Converter Interface
     /// </summary>
-    public  interface IConverterService
+    public interface IConverterService
     {
         /// <summary>
         /// Read up the set file and convert the content to the RawFileData items

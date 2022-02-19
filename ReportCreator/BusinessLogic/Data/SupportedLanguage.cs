@@ -1,4 +1,4 @@
-﻿namespace ReportCreator.Data
+﻿namespace ReportCreator.BusinessLogic.Data
 {
     /// <summary>
     /// Supported Language types
