@@ -28,7 +28,9 @@ namespace DataFormatSwitcher
                 var rawData = _converterService.ReadDataFromFile(request);
                 var data = _converterService.ParseData(rawData.ToList(), request);
                 
-                _converterService.ConvertTo();
+                var reports = _converterService.CreateReport(data.ToList()).ToList();
+
+                _converterService.CreateReportFile(reports, request);
             }
             catch (FileValidationException ex)
             {

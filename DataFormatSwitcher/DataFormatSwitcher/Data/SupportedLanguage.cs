@@ -11,9 +11,9 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// Display Name of the SupportedLanguage, like en-GB or fi-FI
+        /// Culture Info of the SupportedLanguage, like en-GB or fi-FI
         /// </summary>
-        public string DisplayName { get; set; }
+        public string CultureInfo { get; set; }
 
         /// <summary>
         /// Date format

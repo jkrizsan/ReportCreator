@@ -32,13 +32,6 @@ namespace DataFormatSwitcher.Services
             _appSettings = appSettings;
         }
 
-
-
-        /// <inheritdoc />
-        public void ConvertTo()
-        {
-        }
-
         /// <inheritdoc />
         public IEnumerable<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request)
         {
@@ -69,8 +62,10 @@ namespace DataFormatSwitcher.Services
             _logger.LogInformation("Started to read data from the file.");
 
             IEnumerable<RawFileData> records;
- 
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+
+            var lan = getCurrentSupportedLanguageByName(request.OutputRegion);
+
+            var config = new CsvConfiguration(new CultureInfo(lan.CultureInfo))
             {
                 Delimiter = request.Separator.ToString(),
             };
@@ -86,6 +81,42 @@ namespace DataFormatSwitcher.Services
 
             return records;
         }
+
+        /// <inheritdoc />
+        public void CreateReportFile(IEnumerable<ReportData> reportData, ConvertRequest request)
+        {
+            _logger.LogInformation("Started to create report file.");
+
+            FileInfo reportFile = new FileInfo(request.FilePath);
+
+            var lan = getCurrentSupportedLanguageByName(request.OutputRegion);
+
+            var config = new CsvConfiguration(new CultureInfo(lan.CultureInfo))
+            {
+                Delimiter = request.Separator.ToString()
+            };
+
+            using (var writer = new StreamWriter($"{reportFile.Directory}\\Outputdata.csv"))
+            using (var csv = new CsvWriter(writer, config))
+            {
+                csv.Context.RegisterClassMap<ReportDataCSVMap>();
+                csv.WriteRecords(reportData);
+            }
+
+            _logger.LogInformation("Report file created successful.");
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ReportData> CreateReport(List<FileData> fileData)
+            => fileData.GroupBy(x => x.Region)
+                .Select(x => new ReportData()
+                {
+                    Region = x.Key,
+                    LastOrderDate = x.OrderByDescending(y => y.OrderDate).FirstOrDefault().OrderDate,
+                    TotalUnits = x.Sum(y => y.Units),
+                    TotalCost = Math.Round(x.Sum(y => y.Units * y.UnitCost), 2),
+                });
+        
 
         private void mapStringData(RawFileData rawFileData, FileData data)
         {
@@ -134,14 +165,12 @@ namespace DataFormatSwitcher.Services
 
             try
             {
-              
-                fileData.OrderDate = DateTime.ParseExact(stringValue, supLan.DateFormat, new CultureInfo(supLan.DisplayName));
+                fileData.OrderDate = DateTime.ParseExact(stringValue, supLan.DateFormat, new CultureInfo(supLan.CultureInfo));
             }
             catch (Exception ex)
             {
                 throw new FileValidationException($"In the line {i + 1}, the {nameof(RawFileData.OrderDate)} value is not valid." +
                     $" Error message: {ex.Message}");
-
             }
         }
 
@@ -149,7 +178,6 @@ namespace DataFormatSwitcher.Services
             => _appSettings.SupportedLanguages
                .Where(x => x.Name.Equals(name))
                .FirstOrDefault();
-
     }
 }
 

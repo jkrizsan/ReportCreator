@@ -16,6 +16,13 @@ namespace DataFormatSwitcher.Interfaces
         IEnumerable<RawFileData> ReadDataFromFile(ConvertRequest request);
 
         /// <summary>
+        /// Generate output/report file
+        /// </summary>
+        /// <param name="reportData"></param>
+        /// <param name="request"></param>
+        void CreateReportFile(IEnumerable<ReportData> reportData, ConvertRequest request);
+
+        /// <summary>
         /// Convert raw data to another data type which one easier to process further
         /// </summary>
         /// <param name="rawData"></param>
@@ -23,6 +30,11 @@ namespace DataFormatSwitcher.Interfaces
         /// <returns>Collection of FileData</returns>
         IEnumerable<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request);
 
-        void ConvertTo();
+        /// <summary>
+        /// Create output/report objects based on the file datas
+        /// </summary>
+        /// <param name="fileData"></param>
+        /// <returns>Collection of ReportData</returns>
+        IEnumerable<ReportData> CreateReport(List<FileData> fileData);
     }
 }
