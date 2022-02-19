@@ -1,7 +1,7 @@
 ﻿using DataFormatSwitcher.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace DataFormatSwitcher
+namespace DataFormatSwitcher.Services
 {
     /// <summary>
     /// ConverterService Class

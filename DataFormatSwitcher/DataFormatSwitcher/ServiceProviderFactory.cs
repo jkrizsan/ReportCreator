@@ -1,8 +1,9 @@
-﻿using DataFormatSwitcher.Interfaces;
+﻿using System;
+using DataFormatSwitcher.Interfaces;
+using DataFormatSwitcher.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-
 namespace DataFormatSwitcher
 {
     /// <summary>
@@ -23,10 +24,18 @@ namespace DataFormatSwitcher
 
         static void ConfigureServices(IServiceCollection services)
         {
+            IConfiguration config = new ConfigurationBuilder()
+               .AddJsonFile("appsettings.json", true, true)
+               .Build();
+
+            services.AddSingleton(config);
+
             services.AddLogging(builder =>
                 builder.AddSimpleConsole());
 
             services.AddTransient(typeof(IConverterService), typeof(ConverterService));
+
+            services.AddTransient(typeof(IUserInterfaceService), typeof(UserInterfaceService));
         }
 
         public static  T GetService<T>() where T : class
