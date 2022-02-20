@@ -48,13 +48,13 @@ namespace ReportCreator.BusinessLogic.Services
         /// <inheritdoc />
         public void HelpUser(string[] args)
         {
-            if (args[0].ToLowerInvariant().Equals("-h"))
+            if (args.Length.Equals(0) || args[0].ToLowerInvariant().Equals("-h"))
             {
                 string helperText = "Arguments which have to be specified for the proper running: \n\n" +
                     "0: Separator character – indicates the separator\n" +
                     "1: InputRegion         – indicates the locale used for parsing numbers and dates\n" +
                     "2: OutputRegion        – indicates the outputlocale used for parsing numbers and dates\n" +
-                    "3: FilePath            – indicates the name of the file to read";
+                    "3: FilePath            – indicates the name of the file to read\n";
 
                 Console.WriteLine();
                 Console.WriteLine(helperText);
