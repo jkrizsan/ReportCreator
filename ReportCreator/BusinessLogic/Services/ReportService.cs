@@ -1,15 +1,15 @@
-﻿using CsvHelper;
+﻿using System;
+using System.IO;
+using CsvHelper;
+using System.Linq;
+using System.Globalization;
+using ReportCreator.Mappers;
 using CsvHelper.Configuration;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using ReportCreator.BusinessLogic.Data;
 using ReportCreator.BusinessLogic.Exceptions;
 using ReportCreator.BusinessLogic.Interfaces;
-using ReportCreator.Mappers;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 
 namespace ReportCreator.BusinessLogic.Services
 {
@@ -33,7 +33,7 @@ namespace ReportCreator.BusinessLogic.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request)
+        public List<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request)
         {
             List<FileData> data = new List<FileData>();
 
@@ -57,11 +57,11 @@ namespace ReportCreator.BusinessLogic.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<RawFileData> ReadDataFromFile(ConvertRequest request)
+        public List<RawFileData> ReadDataFromFile(ConvertRequest request)
         {
             _logger.LogInformation("Started to load data from the file.");
 
-            IEnumerable<RawFileData> records;
+            List<RawFileData> records = new List<RawFileData>();
 
             var config = getCsvConfiguration(request.InputRegion, request.Separator);
 
@@ -138,14 +138,7 @@ namespace ReportCreator.BusinessLogic.Services
         {
             string stringValue = rawData[i].UnitCost;
 
-            char inputSeparator = getSupportedLanguageByName(request.InputRegion)
-                .DoubleSeparator;
-
             var lan = getSupportedLanguageByName(request.InputRegion);
-
-            stringValue = inputSeparator == ','
-                ? stringValue
-                : stringValue.Replace(inputSeparator, ',');
 
             if (double.TryParse(stringValue, NumberStyles.Any, new CultureInfo(lan.CultureInfo), out double number))
             {

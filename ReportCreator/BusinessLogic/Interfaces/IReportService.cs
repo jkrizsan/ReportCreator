@@ -13,7 +13,7 @@ namespace ReportCreator.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="request"></param>
         /// <returns>Collection of RawFileData</returns>
-        IEnumerable<RawFileData> ReadDataFromFile(ConvertRequest request);
+        List<RawFileData> ReadDataFromFile(ConvertRequest request);
 
         /// <summary>
         /// Create the output/report file
@@ -28,7 +28,7 @@ namespace ReportCreator.BusinessLogic.Interfaces
         /// <param name="rawData"></param>
         /// <param name="request"></param>
         /// <returns>Collection of FileData</returns>
-        IEnumerable<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request);
+        List<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request);
 
         /// <summary>
         /// Create output/report objects based on the file data

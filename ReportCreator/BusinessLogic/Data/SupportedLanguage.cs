@@ -19,10 +19,5 @@
         /// Date format
         /// </summary>
         public string DateFormat { get; set; }
-
-        /// <summary>
-        /// Double Separator, dot or comma
-        /// </summary>
-        public char DoubleSeparator { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 {
   "profiles": {
     "ReportCreator": {
-      "commandName": "Project",
-      "commandLineArgs": "; fi en C:\\Users\\Kobax\\Desktop\\Tasks\\Inputdata.csv"
+      "commandName": "Project"
     }
   }
 }

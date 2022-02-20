@@ -34,15 +34,13 @@ namespace ReportCreator.Tests
                         {
                             Name = "en",
                             CultureInfo = "en-US",
-                            DateFormat = "MM/dd/yyyy",
-                            DoubleSeparator = ','
+                            DateFormat = "MM/dd/yyyy"
                         },
                         new SupportedLanguage()
                         {
                             Name = "fi",
                             CultureInfo = "fi-FI",
-                            DateFormat = "d.M.yyyy",
-                            DoubleSeparator = ','
+                            DateFormat = "d.M.yyyy"
                         }
                     }
             };

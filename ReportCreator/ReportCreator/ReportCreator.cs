@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.Extensions.Logging;
-using ReportCreator.BusinessLogic.Interfaces;
-using ReportCreator.BusinessLogic.Data;
-using ReportCreator.BusinessLogic.Exceptions;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using ReportCreator.BusinessLogic.Data;
+using ReportCreator.BusinessLogic.Interfaces;
+using ReportCreator.BusinessLogic.Exceptions;
 
 namespace ReportCreator
 {
@@ -15,6 +15,10 @@ namespace ReportCreator
 
         private static IUserInterfaceService _userInterfaceService;
 
+        /// <summary>
+        /// Entry point of the Application
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             try
@@ -27,9 +31,9 @@ namespace ReportCreator
                 
                 var rawData = _converterService.ReadDataFromFile(request);
 
-                var parsedData = _converterService.ParseData(rawData.ToList(), request);
+                var parsedData = _converterService.ParseData(rawData, request);
                 
-                var reports = _converterService.CreateReportData(parsedData.ToList()).ToList();
+                var reports = _converterService.CreateReportData(parsedData).ToList();
 
                 _converterService.CreateReportFile(reports, request);
             }
@@ -52,7 +56,8 @@ namespace ReportCreator
 
         private static void init()
         {
-            _logger = ServiceProviderFactory.GetService<ILoggerFactory>()
+            _logger = ServiceProviderFactory
+                .GetService<ILoggerFactory>()
                 .CreateLogger<ReportCreator>();
 
             _converterService = ServiceProviderFactory.GetService<IReportService>();
