@@ -11,7 +11,7 @@ namespace ReportCreator
     {
         private static ILogger _logger;
 
-        private static IConverterService _converterService;
+        private static IReportService _converterService;
 
         private static IUserInterfaceService _userInterfaceService;
 
@@ -26,20 +26,21 @@ namespace ReportCreator
                 ConvertRequest request = _userInterfaceService.BuildRequest(args);
                 
                 var rawData = _converterService.ReadDataFromFile(request);
-                var data = _converterService.ParseData(rawData.ToList(), request);
+
+                var parsedData = _converterService.ParseData(rawData.ToList(), request);
                 
-                var reports = _converterService.CreateReport(data.ToList()).ToList();
+                var reports = _converterService.CreateReportData(parsedData.ToList()).ToList();
 
                 _converterService.CreateReportFile(reports, request);
-            }
-            catch (FileValidationException ex)
-            {
-                _logger.LogError($"Error message: {ex.ErrorMessage}");
             }
             catch (UserException ex)
             {
                 _logger.LogError($"Error message: {ex.ErrorMessage}");
                 _logger.LogInformation($"Use -h flag for get help");
+            }
+            catch (FileValidationException ex)
+            {
+                _logger.LogError($"Error message: {ex.ErrorMessage}");
             }
             catch(Exception ex)
             {
@@ -54,13 +55,11 @@ namespace ReportCreator
             _logger = ServiceProviderFactory.GetService<ILoggerFactory>()
                 .CreateLogger<ReportCreator>();
 
-            _converterService = ServiceProviderFactory.GetService<IConverterService>();
+            _converterService = ServiceProviderFactory.GetService<IReportService>();
 
             _userInterfaceService = ServiceProviderFactory.GetService<IUserInterfaceService>();
 
             _logger.LogInformation("Application Initialized");
         }
-
-     
     }
 }

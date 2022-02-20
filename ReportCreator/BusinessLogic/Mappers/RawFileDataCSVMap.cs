@@ -3,6 +3,9 @@ using ReportCreator.BusinessLogic.Data;
 
 namespace ReportCreator.Mappers
 {
+    /// <summary>
+    /// Mapper class from file content to RawFileData
+    /// </summary>
     public sealed class RawFileDataCSVMap : ClassMap<RawFileData>
     {
         public RawFileDataCSVMap()

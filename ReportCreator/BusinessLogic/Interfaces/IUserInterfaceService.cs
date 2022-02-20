@@ -8,7 +8,7 @@ namespace ReportCreator.BusinessLogic.Interfaces
     public interface IUserInterfaceService
     {
         /// <summary>
-        /// Build request for data format conversions based on the console input arguments
+        /// Build request for the report file generation based on the console input arguments
         /// </summary>
         /// <param name="args"></param>
         /// <returns>ConvertRequests</returns>

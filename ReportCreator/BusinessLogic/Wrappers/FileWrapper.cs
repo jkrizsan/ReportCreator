@@ -1,5 +1,5 @@
-﻿using ReportCreator.BusinessLogic.Interfaces;
-using System.IO;
+﻿using System.IO;
+using ReportCreator.BusinessLogic.Interfaces;
 
 namespace ReportCreator.BusinessLogic.Wrappers
 {

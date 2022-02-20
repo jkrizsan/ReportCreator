@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ReportCreator.BusinessLogic.Interfaces
+﻿namespace ReportCreator.BusinessLogic.Interfaces
 {
     /// <summary>
     /// File Wrapper Interface

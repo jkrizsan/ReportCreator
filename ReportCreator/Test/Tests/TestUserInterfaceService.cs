@@ -1,11 +1,11 @@
 ﻿using Moq;
-using NUnit.Framework;
-using ReportCreator.BusinessLogic.Interfaces;
-using ReportCreator.BusinessLogic.Services;
 using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using ReportCreator.BusinessLogic.Data;
+using ReportCreator.BusinessLogic.Services;
+using ReportCreator.BusinessLogic.Interfaces;
 using ReportCreator.BusinessLogic.Exceptions;
 
 namespace ReportCreator.Tests
@@ -14,6 +14,8 @@ namespace ReportCreator.Tests
     [TestFixture]
     public class TestUserInterfaceService
     {
+        private AppSettings _appSettings;
+
         private IUserInterfaceService _userInterfaceService;
 
         private Mock<IFileWrapper> _fileWrapperMock;
@@ -25,6 +27,26 @@ namespace ReportCreator.Tests
         [SetUp]
         public void SetUp()
         {
+            _appSettings = new AppSettings()
+            {
+                SupportedLanguages = new List<SupportedLanguage>
+                    {   new SupportedLanguage()
+                        {
+                            Name = "en",
+                            CultureInfo = "en-US",
+                            DateFormat = "MM/dd/yyyy",
+                            DoubleSeparator = ','
+                        },
+                        new SupportedLanguage()
+                        {
+                            Name = "fi",
+                            CultureInfo = "fi-FI",
+                            DateFormat = "d.M.yyyy",
+                            DoubleSeparator = ','
+                        }
+                    }
+            };
+
             _fileWrapperMock = new Mock<IFileWrapper>();
             _fileWrapperMock.Setup(x => x.Exists(fileName)).Returns(() => true);
 
@@ -41,25 +63,7 @@ namespace ReportCreator.Tests
             mockLoggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(() => _loggerMock.Object);
 
             _userInterfaceService = new UserInterfaceService(mockLoggerFactory.Object, _fileWrapperMock.Object,
-                new AppSettings()
-                {
-                    SupportedLanguages = new List<SupportedLanguage>
-                    {   new SupportedLanguage()
-                        {
-                            Name = "en",
-                            CultureInfo = "en-US",
-                            DateFormat = "MM/dd/yyyy",
-                            DoubleSeparator = ','
-                        },
-                        new SupportedLanguage()
-                        {
-                            Name = "fi",
-                            CultureInfo = "fi-FI",
-                            DateFormat = "d.M.yyyy",
-                            DoubleSeparator = ','
-                        }
-                    }
-                });
+                _appSettings);
         }
 
         [Test]

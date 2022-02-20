@@ -83,7 +83,7 @@ namespace ReportCreator.BusinessLogic.Services
         {
             string outputRegion = args[2].ToLowerInvariant();
 
-            if (outputRegion.Length < 2)
+            if (outputRegion.Length != 2)
             {
                 throw new UserException("The third argument have to be set!");
             }
@@ -100,7 +100,7 @@ namespace ReportCreator.BusinessLogic.Services
         {
             string inputRegion = args[1].ToLowerInvariant();
 
-            if (inputRegion.Length < 2)
+            if (inputRegion.Length != 2)
             {
                 throw new UserException("The second argument have to be set!");
             }

@@ -14,9 +14,9 @@ using System.Linq;
 namespace ReportCreator.BusinessLogic.Services
 {
     /// <summary>
-    /// ConverterService Class
+    /// ReportService Class
     /// </summary>
-    public class ConverterService : IConverterService
+    public class ReportService : IReportService
     {
         private readonly ILogger _logger;
 
@@ -26,9 +26,9 @@ namespace ReportCreator.BusinessLogic.Services
         /// Constructor
         /// </summary>
         /// <param name="loggerFactory"></param>
-        public ConverterService(ILoggerFactory loggerFactory, AppSettings appSettings)
+        public ReportService(ILoggerFactory loggerFactory, AppSettings appSettings)
         {
-            _logger = loggerFactory.CreateLogger<ConverterService>();
+            _logger = loggerFactory.CreateLogger<ReportService>();
             _appSettings = appSettings;
         }
 
@@ -59,16 +59,11 @@ namespace ReportCreator.BusinessLogic.Services
         /// <inheritdoc />
         public IEnumerable<RawFileData> ReadDataFromFile(ConvertRequest request)
         {
-            _logger.LogInformation("Started to read data from the file.");
+            _logger.LogInformation("Started to load data from the file.");
 
             IEnumerable<RawFileData> records;
 
-            var lan = getCurrentSupportedLanguageByName(request.OutputRegion);
-
-            var config = new CsvConfiguration(new CultureInfo(lan.CultureInfo))
-            {
-                Delimiter = request.Separator.ToString(),
-            };
+            var config = getCsvConfiguration(request.InputRegion, request.Separator);
 
             using (var reader = new StreamReader(request.FilePath))
             using (var csv = new CsvReader(reader, config))
@@ -77,7 +72,7 @@ namespace ReportCreator.BusinessLogic.Services
                 records = csv.GetRecords<RawFileData>().ToList();
             }
 
-            _logger.LogInformation("Data reading from the file was successful.");
+            _logger.LogInformation("Data loaded successful from the file.");
 
             return records;
         }
@@ -85,37 +80,40 @@ namespace ReportCreator.BusinessLogic.Services
         /// <inheritdoc />
         public void CreateReportFile(IEnumerable<ReportData> reportData, ConvertRequest request)
         {
-            _logger.LogInformation("Started to create report file.");
+            _logger.LogInformation("Started to create report/output file.");
 
             FileInfo reportFile = new FileInfo(request.FilePath);
 
-            var lan = getCurrentSupportedLanguageByName(request.OutputRegion);
+            var config = getCsvConfiguration(request.OutputRegion, request.Separator);
 
-            var config = new CsvConfiguration(new CultureInfo(lan.CultureInfo))
-            {
-                Delimiter = request.Separator.ToString()
-            };
-
-            using (var writer = new StreamWriter($"{reportFile.Directory}\\Outputdata.csv"))
+            using (var writer = new StreamWriter($"{reportFile.Directory}\\{_appSettings.ReportFileName}.csv"))
             using (var csv = new CsvWriter(writer, config))
             {
                 csv.Context.RegisterClassMap<ReportDataCSVMap>();
                 csv.WriteRecords(reportData);
             }
 
-            _logger.LogInformation("Report file created successful.");
+            _logger.LogInformation("Report file created successfully.");
         }
 
         /// <inheritdoc />
-        public IEnumerable<ReportData> CreateReport(List<FileData> fileData)
-            => fileData.GroupBy(x => x.Region)
-                .Select(x => new ReportData()
-                {
-                    Region = x.Key,
-                    LastOrderDate = x.OrderByDescending(y => y.OrderDate).FirstOrDefault().OrderDate,
-                    TotalUnits = x.Sum(y => y.Units),
-                    TotalCost = Math.Round(x.Sum(y => y.Units * y.UnitCost), 2),
-                });
+        public IEnumerable<ReportData> CreateReportData(List<FileData> fileData)
+        {
+            _logger.LogInformation("Started to generate the report data.");
+
+             var reportData =  fileData.GroupBy(x => x.Region)
+                  .Select(x => new ReportData()
+                  {
+                      Region = x.Key,
+                      LastOrderDate = x.OrderByDescending(y => y.OrderDate).FirstOrDefault().OrderDate,
+                      TotalUnits = x.Sum(y => y.Units),
+                      TotalCost = Math.Round(x.Sum(y => y.Units * y.UnitCost), 2),
+                  });
+
+            _logger.LogInformation("The report data generated successfully");
+
+            return reportData;
+        }
         
 
         private void mapStringData(RawFileData rawFileData, FileData data)
@@ -127,9 +125,7 @@ namespace ReportCreator.BusinessLogic.Services
 
         private void mapIntData(List<RawFileData> rawData, FileData fileData, int i)
         {
-            int number;
-
-            if (int.TryParse(rawData[i].Units, out number))
+            if (int.TryParse(rawData[i].Units, out int number))
             {
                 fileData.Units = number;
                 return;
@@ -140,15 +136,18 @@ namespace ReportCreator.BusinessLogic.Services
 
         private void mapDoubleData(ConvertRequest request, List<RawFileData> rawData, FileData fileData, int i)
         {
-            double number;
             string stringValue = rawData[i].UnitCost;
 
-            char inputSeparator = getCurrentSupportedLanguageByName(request.InputRegion)
+            char inputSeparator = getSupportedLanguageByName(request.InputRegion)
                 .DoubleSeparator;
 
-            stringValue = stringValue.Replace(inputSeparator, ',');
+            var lan = getSupportedLanguageByName(request.InputRegion);
 
-            if (double.TryParse(stringValue, out number))
+            stringValue = inputSeparator == ','
+                ? stringValue
+                : stringValue.Replace(inputSeparator, ',');
+
+            if (double.TryParse(stringValue, NumberStyles.Any, new CultureInfo(lan.CultureInfo), out double number))
             {
                 fileData.UnitCost = number;
                 return;
@@ -161,7 +160,7 @@ namespace ReportCreator.BusinessLogic.Services
         {
             string stringValue = rawData[i].OrderDate;
 
-            var supLan = getCurrentSupportedLanguageByName(request.InputRegion);
+            var supLan = getSupportedLanguageByName(request.InputRegion);
 
             try
             {
@@ -174,7 +173,19 @@ namespace ReportCreator.BusinessLogic.Services
             }
         }
 
-        private SupportedLanguage getCurrentSupportedLanguageByName(string name)
+        private CsvConfiguration getCsvConfiguration(string regionName, char separator)
+        {
+            var lan = getSupportedLanguageByName(regionName);
+
+            var config = new CsvConfiguration(new CultureInfo(lan.CultureInfo))
+            {
+                Delimiter = separator.ToString(),
+            };
+
+            return config;
+        }
+
+        private SupportedLanguage getSupportedLanguageByName(string name)
             => _appSettings.SupportedLanguages
                .Where(x => x.Name.Equals(name))
                .FirstOrDefault();

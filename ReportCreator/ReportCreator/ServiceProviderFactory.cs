@@ -14,18 +14,18 @@ namespace ReportCreator
     /// </summary>
     public class ServiceProviderFactory
     {
-        static IServiceProvider serviceProvider;
+        private static IServiceProvider _serviceProvider;
 
-        static  ServiceProviderFactory()
+        static ServiceProviderFactory()
         {
             IServiceCollection services = new ServiceCollection();
 
             ConfigureServices(services);
 
-            serviceProvider = services.BuildServiceProvider();
+            _serviceProvider = services.BuildServiceProvider();
         }
 
-        static void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             IConfiguration config = new ConfigurationBuilder()
                .AddJsonFile("appsettings.json", true, true)
@@ -36,7 +36,7 @@ namespace ReportCreator
             services.AddLogging(builder =>
                 builder.AddSimpleConsole());
 
-            services.AddTransient(typeof(IConverterService), typeof(ConverterService));
+            services.AddTransient(typeof(IReportService), typeof(ReportService));
 
             services.AddTransient(typeof(IUserInterfaceService), typeof(UserInterfaceService));
 
@@ -45,6 +45,6 @@ namespace ReportCreator
         }
 
         public static  T GetService<T>() where T : class
-            => (T)serviceProvider.GetService(typeof(T));
+            => (T)_serviceProvider.GetService(typeof(T));
     }
 }

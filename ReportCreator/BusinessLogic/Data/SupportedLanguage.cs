@@ -1,7 +1,7 @@
 ﻿namespace ReportCreator.BusinessLogic.Data
 {
     /// <summary>
-    /// Supported Language types
+    /// Supported Languages
     /// </summary>
     public class SupportedLanguage
     {

@@ -1,22 +1,22 @@
-﻿using ReportCreator.BusinessLogic.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ReportCreator.BusinessLogic.Data;
 
 namespace ReportCreator.BusinessLogic.Interfaces
 {
     /// <summary>
-    /// Converter Interface
+    /// Interface of the Report Service
     /// </summary>
-    public interface IConverterService
+    public interface IReportService
     {
         /// <summary>
-        /// Read up the set file and convert the content to the RawFileData items
+        /// Read up the given file and convert the content to the RawFileData items
         /// </summary>
         /// <param name="request"></param>
         /// <returns>Collection of RawFileData</returns>
         IEnumerable<RawFileData> ReadDataFromFile(ConvertRequest request);
 
         /// <summary>
-        /// Generate output/report file
+        /// Create the output/report file
         /// </summary>
         /// <param name="reportData"></param>
         /// <param name="request"></param>
@@ -31,10 +31,10 @@ namespace ReportCreator.BusinessLogic.Interfaces
         IEnumerable<FileData> ParseData(List<RawFileData> rawData, ConvertRequest request);
 
         /// <summary>
-        /// Create output/report objects based on the file datas
+        /// Create output/report objects based on the file data
         /// </summary>
         /// <param name="fileData"></param>
         /// <returns>Collection of ReportData</returns>
-        IEnumerable<ReportData> CreateReport(List<FileData> fileData);
+        IEnumerable<ReportData> CreateReportData(List<FileData> fileData);
     }
 }

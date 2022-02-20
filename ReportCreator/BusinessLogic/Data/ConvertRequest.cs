@@ -6,17 +6,17 @@
     public class ConvertRequest
     {
         /// <summary>
-        /// Separator of the file data
+        /// Separator/Delimiter of the file data
         /// </summary>
         public char Separator { get; set; }
 
         /// <summary>
-        /// Short form of input region language style
+        /// Short form of the input region language
         /// </summary>
         public string InputRegion { get; set; }
 
         /// <summary>
-        /// Short form of output region language style
+        /// Short form of the output region language
         /// </summary>
         public string OutputRegion { get; set; }
 
